@@ -23,6 +23,7 @@ public class FoodInventoryController extends BaseController {
         this.foodInventoryService = foodInventoryService;
     }
 
+    // Get API
     @GetMapping("/{id}")
     public ResponseDTO<FoodItemResDTO> readFoodItem(@PathVariable(name = "id") @Min(1) Long id) {
         return createResponse(HttpStatus.OK, foodInventoryService.read(id));
