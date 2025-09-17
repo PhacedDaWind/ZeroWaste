@@ -18,10 +18,11 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
     private static final String[] SWAGGER_WHITELIST = {
-            "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
     };
 
     @Bean
