@@ -9,7 +9,13 @@ import java.util.Objects;
 @Service
 public class FoodItemConverter {
 
-  public FoodItemResDTO toFoodItemResDTO(FoodItem foodItem) {
+  private final UsersConverter usersConverter;
+
+    public FoodItemConverter(UsersConverter usersConverter) {
+        this.usersConverter = usersConverter;
+    }
+
+    public FoodItemResDTO toFoodItemResDTO(FoodItem foodItem) {
     if ( Objects.isNull(foodItem)) {
       return null;
     }
@@ -23,7 +29,7 @@ public class FoodItemConverter {
     resDTO.setContactMethod(foodItem.getContactMethod());
     resDTO.setPickupLocation(foodItem.getPickupLocation());
     resDTO.setActionType(foodItem.getActionType());
-    resDTO.setUser(foodItem.getUser());
+    resDTO.setUser(usersConverter.toUserResponseDTO(foodItem.getUser()));
     resDTO.setConvertToDonation(foodItem.getConvertToDonation());
     resDTO.setReservedQuantity(foodItem.getReservedQuantity());
     return resDTO;

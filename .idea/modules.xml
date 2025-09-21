@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/zerowaste-api.iml" filepath="$PROJECT_DIR$/.idea/zerowaste-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zerowaste-api/zerowaste-api.iml" filepath="$PROJECT_DIR$/zerowaste-api/zerowaste-api.iml" />
     </modules>
   </component>
 </project>

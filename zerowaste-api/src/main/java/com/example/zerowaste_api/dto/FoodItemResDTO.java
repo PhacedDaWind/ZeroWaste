@@ -30,7 +30,7 @@ public class FoodItemResDTO {
 
   private FoodItemActionType actionType;
 
-  private Users user;
+  private UserResponseDTO user;
 
   private Boolean convertToDonation;
 
