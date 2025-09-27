@@ -23,9 +23,4 @@ public class NotificationConverter {
         return response;
     }
 
-    public Notification toNotification(NotificationReqDTO request ){
-        Notification entity=new Notification();
-        entity.setNotifType(request.getNotifType());
-        return entity;
-    }
 }
