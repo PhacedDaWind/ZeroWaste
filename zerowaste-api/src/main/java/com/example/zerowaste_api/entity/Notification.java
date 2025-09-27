@@ -27,5 +27,6 @@ public class Notification extends BaseDomain {
     private Boolean markAsRead;
 
     @Column(name="notification_type")
+    @Enumerated (EnumType.STRING)
     private NotificationType notifType;
 }
