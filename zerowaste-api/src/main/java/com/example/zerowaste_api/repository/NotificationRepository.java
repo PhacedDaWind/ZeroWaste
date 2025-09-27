@@ -23,7 +23,17 @@ public interface NotificationRepository extends JpaRepository<Notification,Long>
 
     //mark specific unread notification as Read?
     @Modifying
-    @Query("UPDATE Notification n SET n.markAsRead=True WHERE n.id=:id AND n.usersId=:usersId AND n.markAsRead=false")
-    int changeToRead(@Param("id") BigInteger id, @Param("usersId") BigInteger usersId);
+    @Query("UPDATE Notification u SET u.markAsRead=True WHERE u.id=:notificationId AND u.usersId=:usersId AND u.markAsRead=false")
+    int changeToRead(@Param("notificationId") BigInteger id, @Param("usersId") BigInteger usersId);
+
+    //Delete specific notification
+    @Modifying
+    @Query("DELETE FROM Notification u WHERE u.id=:notificationId")
+    void deleteByNotificationId(@Param("notificationId") BigInteger id);
+
+    //Delete whole notification for a specific user
+    @Modifying
+    @Query("DELETE FROM Notification u WHERE u.usersId=:usersId ")
+    void deleteWholeNotifications(@Param("usersId") BigInteger usersId);
 }
 
