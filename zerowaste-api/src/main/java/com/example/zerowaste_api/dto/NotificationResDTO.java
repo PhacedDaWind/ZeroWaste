@@ -1,5 +1,6 @@
 package com.example.zerowaste_api.dto;
 
+import com.example.zerowaste_api.enums.NotificationType;
 import com.example.zerowaste_api.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,7 @@ public class NotificationResDTO {
     private String message;
 
     private Boolean markAsRead;
+
+    private NotificationType notifType;
 
 }
