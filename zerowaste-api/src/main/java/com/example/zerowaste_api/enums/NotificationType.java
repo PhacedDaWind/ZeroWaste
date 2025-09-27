@@ -27,6 +27,7 @@ public enum NotificationType implements BaseEnumInterface {
         return (T) label;
     }
 
+    //choose String depend on what type of notification
     public String format(Object... extra){
         String result= label;
         switch (this){
@@ -53,6 +54,7 @@ public enum NotificationType implements BaseEnumInterface {
         return result;
     }
 
+    //format date time
     private String formDate(LocalDateTime time){
             return time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
