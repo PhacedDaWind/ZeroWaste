@@ -21,8 +21,9 @@ public interface NotificationRepository extends JpaRepository<Notification,Long>
     @Query("SELECT u FROM Notification u WHERE u.usersId=:usersId AND u.markAsRead=false ORDER BY u.createdAt DESC")
     List<Notification> findByUnread(@Param("usersId") BigInteger usersId);
 
-
+    //mark specific unread notification as Read?
     @Modifying
-    @Query("UPDATE Notification n SET ")
+    @Query("UPDATE Notification n SET n.markAsRead=True WHERE n.id=:id AND n.usersId=:usersId AND n.markAsRead=false")
+    int changeToRead(@Param("id") BigInteger id, @Param("usersId") BigInteger usersId);
 }
 
