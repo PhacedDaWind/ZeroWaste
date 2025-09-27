@@ -1,6 +1,7 @@
 package com.example.zerowaste_api.entity;
 
 import com.example.zerowaste_api.common.BaseDomain;
+import com.example.zerowaste_api.enums.NotificationType;
 import com.example.zerowaste_api.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,5 +26,6 @@ public class Notification extends BaseDomain {
 
     private Boolean markAsRead;
 
-    pric
+    @Column(name="notification_type")
+    private NotificationType notifType;
 }
