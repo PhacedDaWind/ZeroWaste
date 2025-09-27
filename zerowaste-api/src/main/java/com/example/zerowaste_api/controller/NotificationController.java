@@ -3,14 +3,11 @@ package com.example.zerowaste_api.controller;
 import com.example.zerowaste_api.common.BaseController;
 import com.example.zerowaste_api.common.ResponseDTO;
 import com.example.zerowaste_api.dto.NotificationResDTO;
-import com.example.zerowaste_api.dto.UserRegistrationReqDTO;
+import com.example.zerowaste_api.enums.NotificationType;
 import com.example.zerowaste_api.service.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Validated
 @RestController
@@ -24,8 +21,8 @@ public class NotificationController extends BaseController {
     }
 
     @PostMapping("")
-    public ResponseDTO<NotificationResDTO> notificationUser(@RequestBody UserRegistrationReqDTO notificationResDTO) {
-        return createResponse(HttpStatus.OK, notificationService.(notificationResDTO));
+    public ResponseDTO<NotificationResDTO> notification(@RequestParam NotificationType notificationType) {
+        return createResponse(HttpStatus.OK, notificationService.notification(notificationType));
     }
 
 }
