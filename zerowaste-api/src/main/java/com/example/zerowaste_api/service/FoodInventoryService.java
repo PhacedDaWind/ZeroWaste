@@ -2,6 +2,7 @@ package com.example.zerowaste_api.service;
 
 import com.example.zerowaste_api.converter.FoodItemConverter;
 import com.example.zerowaste_api.dao.FoodItemDAO;
+import com.example.zerowaste_api.dto.FoodItemReqDTO;
 import com.example.zerowaste_api.dto.FoodItemResDTO;
 import com.example.zerowaste_api.entity.FoodItem;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,13 @@ public class FoodInventoryService {
 
     public FoodItemResDTO read(Long id) {
         FoodItem foodItem = foodItemDAO.findById(id).orElse(null);
+        return foodItemConverter.toFoodItemResDTO(foodItem);
+    }
+
+    public FoodItemResDTO create(FoodItemReqDTO foodItemReqDTO) {
+        FoodItem foodItem = new FoodItem();
+        foodItem = foodItemConverter.toFoodItem(foodItemReqDTO, foodItem);
+        foodItemDAO.save(foodItem);
         return foodItemConverter.toFoodItemResDTO(foodItem);
     }
 }
