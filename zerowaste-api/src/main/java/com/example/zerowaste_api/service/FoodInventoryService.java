@@ -1,11 +1,16 @@
 package com.example.zerowaste_api.service;
 
+import com.example.zerowaste_api.common.ServiceAppException;
+import com.example.zerowaste_api.common.error.FoodItemErrorConstant;
 import com.example.zerowaste_api.converter.FoodItemConverter;
 import com.example.zerowaste_api.dao.FoodItemDAO;
 import com.example.zerowaste_api.dto.FoodItemReqDTO;
 import com.example.zerowaste_api.dto.FoodItemResDTO;
 import com.example.zerowaste_api.entity.FoodItem;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class FoodInventoryService {
@@ -34,5 +39,12 @@ public class FoodInventoryService {
         foodItem = foodItemConverter.toFoodItem(foodItemReqDTO, foodItem);
         foodItemDAO.save(foodItem);
         return foodItemConverter.toFoodItemResDTO(foodItem);
+    }
+
+    public void delete(Long id) {
+        if ( Objects.isNull(id)) {
+            throw new ServiceAppException(HttpStatus.BAD_REQUEST, FoodItemErrorConstant.FOOD_ITEM_NOT_FOUND);
+        }
+        foodItemDAO.delete(id);
     }
 }
