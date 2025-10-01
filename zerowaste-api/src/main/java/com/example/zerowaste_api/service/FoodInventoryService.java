@@ -18,12 +18,19 @@ public class FoodInventoryService {
     }
 
     public FoodItemResDTO read(Long id) {
-        FoodItem foodItem = foodItemDAO.findById(id).orElse(null);
+        FoodItem foodItem = foodItemDAO.findById(id);
         return foodItemConverter.toFoodItemResDTO(foodItem);
     }
 
     public FoodItemResDTO create(FoodItemReqDTO foodItemReqDTO) {
         FoodItem foodItem = new FoodItem();
+        foodItem = foodItemConverter.toFoodItem(foodItemReqDTO, foodItem);
+        foodItemDAO.save(foodItem);
+        return foodItemConverter.toFoodItemResDTO(foodItem);
+    }
+
+    public FoodItemResDTO update(Long id, FoodItemReqDTO foodItemReqDTO) {
+        FoodItem foodItem = foodItemDAO.findById(id);
         foodItem = foodItemConverter.toFoodItem(foodItemReqDTO, foodItem);
         foodItemDAO.save(foodItem);
         return foodItemConverter.toFoodItemResDTO(foodItem);

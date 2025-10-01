@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,5 +36,10 @@ public class FoodInventoryController extends BaseController {
     @PostMapping("/create")
     public ResponseDTO<FoodItemResDTO> createFoodItem(@RequestBody FoodItemReqDTO foodItemReqDTO) {
         return createResponse(HttpStatus.OK, foodInventoryService.create(foodItemReqDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseDTO<FoodItemResDTO> updateFoodItem(@PathVariable Long id, @RequestBody FoodItemReqDTO foodItemReqDTO) {
+        return createResponse(HttpStatus.OK, foodInventoryService.update(id, foodItemReqDTO));
     }
 }
