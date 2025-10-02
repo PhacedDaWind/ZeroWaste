@@ -5,19 +5,19 @@ import com.example.zerowaste_api.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 
 public class NotificationResDTO {
-    private LocalDateTime createdAt;
+    private Long id;
 
-    private BigInteger usersId;
+    private Date createdAt;
 
-    private Status status;
+    private Long usersId;
 
     private String message;
 
