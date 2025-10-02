@@ -17,10 +17,7 @@ import java.math.BigInteger;
 
 public class Notification extends BaseDomain {
 
-    private BigInteger usersId;
-
-    @Enumerated (EnumType.STRING)
-    private Status status;
+    private Long usersId;
 
     private String message;
 
