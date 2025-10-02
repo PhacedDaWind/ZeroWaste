@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Validated
 @RestController
-@RequestMapping
+@RequestMapping("/api/notification")
 
 public class NotificationController extends BaseController {
 
@@ -20,9 +22,36 @@ public class NotificationController extends BaseController {
         this.notificationService = notificationService;
     }
 
-    @PostMapping("")
-    public ResponseDTO<NotificationResDTO> notification(@RequestParam NotificationType notificationType) {
-        return createResponse(HttpStatus.OK, notificationService.notification(notificationType));
+    @GetMapping("/list/{id}")
+    public ResponseDTO<List<NotificationResDTO>> readNotificationList(@PathVariable Long id,
+                                                                      @RequestParam(required = false) NotificationType notificationType) {
+        return createResponse(HttpStatus.OK, notificationService.readNotificationList(id, notificationType));
     }
+
+    @GetMapping("/unread/{id}")
+    public ResponseDTO<List<NotificationResDTO>> unreadNotificationList(@PathVariable Long id){
+        return createResponse(HttpStatus.OK, notificationService.unreadNotificationList(id));
+    }
+    @PutMapping("/update/{id}")
+    public ResponseDTO<NotificationResDTO> markAsRead(@PathVariable Long id) {
+        return createResponse(HttpStatus.OK, notificationService.markAsRead(id));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseDTO<String> deleteNotification(@PathVariable Long id) {
+        notificationService.delete(id);
+        return createResponse(HttpStatus.OK, "OK");
+    }
+
+    @DeleteMapping("/alldelete/{userId}")
+    public ResponseDTO<String> deleteAllNotifications(@PathVariable Long userId) {
+        notificationService.deleteAll(userId);
+        return createResponse(HttpStatus.OK, "OK");
+    }
+    // for testing purposes
+//    @PostMapping("/create")
+//    public ResponseDTO<NotificationResDTO> readNotificationList(@RequestBody NotificationRequestDTO notificationRequestDTO) {
+//        return createResponse(HttpStatus.OK, notificationService.createFoodItemNotification(notificationRequestDTO));
+//    }
 
 }
