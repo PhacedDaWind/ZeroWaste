@@ -2,14 +2,18 @@ package com.example.zerowaste_api.controller;
 
 import com.example.zerowaste_api.common.BaseController;
 import com.example.zerowaste_api.common.ResponseDTO;
+import com.example.zerowaste_api.dto.NotificationReqDTO;
 import com.example.zerowaste_api.dto.NotificationResDTO;
+import com.example.zerowaste_api.entity.Notification;
 import com.example.zerowaste_api.enums.NotificationType;
 import com.example.zerowaste_api.service.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Validated
 @RestController
@@ -48,10 +52,19 @@ public class NotificationController extends BaseController {
         notificationService.deleteAll(userId);
         return createResponse(HttpStatus.OK, "OK");
     }
-    // for testing purposes
-//    @PostMapping("/create")
-//    public ResponseDTO<NotificationResDTO> readNotificationList(@RequestBody NotificationRequestDTO notificationRequestDTO) {
-//        return createResponse(HttpStatus.OK, notificationService.createFoodItemNotification(notificationRequestDTO));
-//    }
+
+    //for testing purposes
+    @PostMapping("/createnotif")
+    public ResponseDTO<NotificationResDTO> createNotificationList(@RequestBody NotificationReqDTO request) {
+        NotificationResDTO notification = notificationService.create(
+                request.getNotifType(),
+                request.getUsersId(),
+                request.getItemName(),
+                request.getQuantity(),
+                request.getExpiryDate(),
+                request.getMeal()
+        );
+        return createResponse(HttpStatus.OK,notification);
+    }
 
 }
