@@ -46,14 +46,14 @@ public class NotificationDAO {
 
     public void delete(Long id) {
         if (Objects.isNull(id)) {
-            throw new ServiceAppException(HttpStatus.BAD_REQUEST, FoodItemErrorConstant.FOOD_ITEM_NOT_FOUND);
+            throw new ServiceAppException(HttpStatus.BAD_REQUEST, NotificationErrorConstant.NOTIFICATION_NOT_FOUND);
         }
         notificationRepository.deleteById(id);
     }
 
     public void deleteByUserId(Long userId) {
         if (Objects.isNull(userId)) {
-            throw new ServiceAppException(HttpStatus.BAD_REQUEST, UserErrorConstant.USER_NOT_FOUND);
+            throw new ServiceAppException(HttpStatus.BAD_REQUEST, NotificationErrorConstant.NOTIFICATION_NOT_FOUND);
         }
 
         notificationRepository.deleteWholeNotifications(userId);
