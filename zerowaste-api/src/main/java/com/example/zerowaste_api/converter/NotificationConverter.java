@@ -1,6 +1,7 @@
 package com.example.zerowaste_api.converter;
 
 
+import com.example.zerowaste_api.dto.NotificationReqDTO;
 import com.example.zerowaste_api.dto.NotificationResDTO;
 import com.example.zerowaste_api.entity.Notification;
 import org.springframework.stereotype.Service;
@@ -24,4 +25,5 @@ public class NotificationConverter {
         response.setNotifType(notification.getNotifType());
         return response;
     }
+
 }
