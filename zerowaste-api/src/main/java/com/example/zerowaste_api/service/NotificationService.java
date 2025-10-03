@@ -3,6 +3,7 @@ package com.example.zerowaste_api.service;
 
 import com.example.zerowaste_api.common.ServiceAppException;
 import com.example.zerowaste_api.common.error.FoodItemErrorConstant;
+import com.example.zerowaste_api.common.error.NotificationErrorConstant;
 import com.example.zerowaste_api.converter.NotificationConverter;
 import com.example.zerowaste_api.dao.NotificationDAO;
 import com.example.zerowaste_api.dto.NotificationResDTO;
@@ -54,7 +55,7 @@ public class NotificationService {
 
     public void delete(Long id) {
         if (Objects.isNull(id)) {
-            throw new ServiceAppException(HttpStatus.BAD_REQUEST, FoodItemErrorConstant.FOOD_ITEM_NOT_FOUND);
+            throw new ServiceAppException(HttpStatus.BAD_REQUEST, NotificationErrorConstant.NOTIFICATION_NOT_FOUND);
         }
         notificationDAO.delete(id);
     }
@@ -81,7 +82,8 @@ public class NotificationService {
         switch (notificationType) {
             case FOOD_INVENTORY_ALERT:
                 if (expiryDate == null) {
-                    throw new IllegalArgumentException("Expiry date required for FOOD_INVENTORY_ALERT");
+                    throw new ServiceAppException(HttpStatus.BAD_REQUEST,
+                            NotificationErrorConstant.NOTIFICATION_NOT_FOUND);
                 }
                 Long diff = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
                 if (diff >= 0 && diff <= 3) {
@@ -94,7 +96,8 @@ public class NotificationService {
 
             case DONATION_POSTED:
                 if (itemName == null || quantity == null || itemName.size() != quantity.size()) {
-                    throw new IllegalArgumentException("Item names and quantities must match for DONATION_POSTED");
+                    throw new ServiceAppException(HttpStatus.BAD_REQUEST,
+                            NotificationErrorConstant.NOTIFICATION_NOT_FOUND);
                 }
                 message = notificationType.format(itemName, quantity);
                 notification.setMessage(message);
