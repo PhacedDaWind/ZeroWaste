@@ -7,29 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class NotificationReqDTO {
-    private Long id;
-
-    private Date createdAt;
-
-    private Long usersId;
-
-    private String message;
-
-    private Boolean markAsRead;
 
     private NotificationType notifType;
 
-    private String itemName;
+    private Long usersId;
 
-    private BigDecimal quantity;
+    private List<String> itemName;
 
-    private Date expiryDate;
+    private List<Long> quantity;
+
+    private LocalDate expiryDate;
 
     private String meal;
 
