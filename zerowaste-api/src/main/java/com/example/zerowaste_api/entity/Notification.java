@@ -18,7 +18,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name="notification")
-
 public class Notification extends BaseDomain {
 
     private Long usersId;
