@@ -77,13 +77,14 @@ public class NotificationService {
         Notification notification = new Notification();
         notification.setUsersId(userId);
         notification.setNotifType(notificationType);
-        String message;
+        notification.setMarkAsRead(false);
+        String message = null;
         //converter to update notif (need to switch case for diff notif type)
         switch (notificationType) {
             case FOOD_INVENTORY_ALERT:
                 if (expiryDate == null) {
                     throw new ServiceAppException(HttpStatus.BAD_REQUEST,
-                            NotificationErrorConstant.NOTIFICATION_NOT_FOUND);
+                            NotificationErrorConstant.NOTIFICATION_INVALID_REQUEST);
                 }
                 Long diff = ChronoUnit.DAYS.between(LocalDate.now(), expiryDate);
                 if (diff >= 0 && diff <= 3) {
@@ -97,7 +98,7 @@ public class NotificationService {
             case DONATION_POSTED:
                 if (itemName == null || quantity == null || itemName.size() != quantity.size()) {
                     throw new ServiceAppException(HttpStatus.BAD_REQUEST,
-                            NotificationErrorConstant.NOTIFICATION_NOT_FOUND);
+                            NotificationErrorConstant.NOTIFICATION_INVALID_REQUEST);
                 }
                 message = notificationType.format(itemName, quantity);
                 notification.setMessage(message);
