@@ -1,6 +1,5 @@
 package com.example.zerowaste_api.dto;
 
-import com.example.zerowaste_api.entity.Users;
 import com.example.zerowaste_api.enums.FoodItemActionType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class FoodItemResDTO {
+  private Long id;
   private String name;
 
   private BigDecimal quantity;
