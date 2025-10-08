@@ -25,6 +25,7 @@ public class FoodItemConverter {
       return null;
     }
     FoodItemResDTO resDTO = new FoodItemResDTO();
+    resDTO.setId(foodItem.getId());
     resDTO.setName(foodItem.getName());
     resDTO.setQuantity(foodItem.getQuantity());
     resDTO.setExpiryDate(foodItem.getExpiryDate());
