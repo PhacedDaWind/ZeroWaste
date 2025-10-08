@@ -54,7 +54,7 @@ public class NotificationController extends BaseController {
     }
 
     //for testing purposes
-    @PostMapping("/createnotif")
+    @PostMapping("/create")
     public ResponseDTO<NotificationResDTO> createNotificationList(@RequestBody NotificationReqDTO request) {
         NotificationResDTO notification = notificationService.create(
                 request.getNotifType(),
