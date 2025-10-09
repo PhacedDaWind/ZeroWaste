@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RestController
 @RequestMapping("api/browse-food")
-public class BrowseFoodItemController extends BaseController {
+public class    BrowseFoodItemController extends BaseController {
 
     private final BrowseFoodItemService browseFoodItemService;
 
