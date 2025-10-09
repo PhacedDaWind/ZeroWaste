@@ -14,7 +14,7 @@ public class FoodItemResDTO {
   private Long id;
   private String name;
 
-  private BigDecimal quantity;
+  private Long quantity;
 
   private LocalDate expiryDate;
 
