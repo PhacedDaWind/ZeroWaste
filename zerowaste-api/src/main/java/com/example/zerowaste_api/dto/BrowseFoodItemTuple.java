@@ -5,11 +5,19 @@ import java.time.LocalDate;
 public interface BrowseFoodItemTuple {
     Long getId();
 
+    Long getUserId();
+
+    Boolean getConvertToDonation();
+
+    String getCategory();
+
+    LocalDate getExpiryDate();
+
+    String getStorageLocation();
+
     String getUserName();
 
     Long getQuantity();
-
-    LocalDate getExpiryDate();
 
     String getPickupLocation();
 
