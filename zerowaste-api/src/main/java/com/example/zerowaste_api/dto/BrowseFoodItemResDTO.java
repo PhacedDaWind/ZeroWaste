@@ -12,11 +12,21 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class BrowseFoodItemResDTO {
+    private Long id;
+
+    private Long userId;
+
+    private Boolean convertToDonation;
+
+    private String category;
+
+    private LocalDate expiryDate;
+
+    private String storageLocation;
+
     private String name;
 
     private Long quantity;
-
-    private LocalDate expiryDate;
 
     private String pickupLocation;
 
