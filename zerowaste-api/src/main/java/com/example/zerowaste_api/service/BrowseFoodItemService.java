@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public abstract class   BrowseFoodItemService extends PaginateService {
+public class BrowseFoodItemService extends PaginateService {
     private final BrowseFoodItemDAO browseFoodItemDAO;
 
     private final BrowseFoodItemConverter browseFoodItemConverter;
@@ -26,6 +26,11 @@ public abstract class   BrowseFoodItemService extends PaginateService {
     public BrowseFoodItemService(BrowseFoodItemDAO browseFoodItemDAO, BrowseFoodItemConverter browseFoodItemConverter) {
         this.browseFoodItemDAO = browseFoodItemDAO;
         this.browseFoodItemConverter = browseFoodItemConverter;
+    }
+
+    @Override
+    protected Sort getDefaultSort() {
+        return Sort.by("id");
     }
 
     public Page<BrowseFoodItemTuple> toBrowseFoodItemList(BrowseFoodItemReqDTO reqDTO) {
