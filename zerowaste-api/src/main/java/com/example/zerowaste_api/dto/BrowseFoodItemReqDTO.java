@@ -3,6 +3,7 @@ package com.example.zerowaste_api.dto;
 import com.example.zerowaste_api.common.BaseViewOption;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
