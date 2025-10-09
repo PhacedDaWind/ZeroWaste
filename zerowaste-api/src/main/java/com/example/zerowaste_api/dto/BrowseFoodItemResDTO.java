@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class BrowseFoodItemResDTO {
     private String name;
 
-    private BigDecimal quantity;
+    private Long quantity;
 
     private LocalDate expiryDate;
 
