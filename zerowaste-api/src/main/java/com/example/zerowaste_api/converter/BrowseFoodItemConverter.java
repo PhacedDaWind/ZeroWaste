@@ -15,14 +15,18 @@ public class BrowseFoodItemConverter {
 
     public List<BrowseFoodItemResDTO> toBrowseFoodItemResDTO(List<BrowseFoodItemTuple> browseFoodItemTuple) {
         return browseFoodItemTuple.stream()
-                .filter(Objects::nonNull)
                 .map(tuples->{
                     BrowseFoodItemResDTO resDTO = new BrowseFoodItemResDTO();
+                    resDTO.setId(tuples.getId());
+                    resDTO.setUserId(tuples.getUserId());
+                    resDTO.setConvertToDonation(tuples.getConvertToDonation());
+                    resDTO.setCategory(tuples.getCategory());
+                    resDTO.setExpiryDate(tuples.getExpiryDate());
+                    resDTO.setStorageLocation(tuples.getStorageLocation());
                     resDTO.setName(tuples.getUserName());
                     resDTO.setQuantity(tuples.getQuantity());
-                    resDTO.setExpiryDate(tuples.getExpiryDate());
-                    resDTO.setContactMethod(tuples.getContactMethod());
                     resDTO.setPickupLocation(tuples.getPickupLocation());
+                    resDTO.setContactMethod(tuples.getContactMethod());
                     return resDTO;
                         })
                 .collect(Collectors.toList());
