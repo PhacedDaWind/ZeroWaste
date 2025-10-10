@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public interface BrowseFoodItemTuple {
     Long getId();
 
-    Long getUserId();
+    Long getUsersId();
 
     Boolean getConvertToDonation();
 
