@@ -21,29 +21,30 @@ public class BrowseFoodItemReqDTO extends BaseViewOption {
 
     private String storageLocation;
 
-    private List<@Pattern(
+//    @ApiModelProperty("column(s)  - [id|usersId|convertToDonation|category|expiryDate|storageLocation]")
+    private List<
+            @Pattern(
             regexp =  "^-{0,1}(id|usersId|convertToDonation|category|expiryDate|storageLocation)$",
-            message = "Unsupported sort column(s). Supported column(s) for - [id|usersId|convertToDonation|category|expiryDate|storageLocation]"
-    )
+            message = "Unsupported sort column(s). Supported column(s) for - [id|usersId|convertToDonation|category|expiryDate|storageLocation]")
             String> sort;
 
     BrowseFoodItemReqDTO() {
-        convertMap.put("id", "(id)");
-        convertMap.put("-id", "-(id)");
+        super.getConvertMap().put("id", "(id)");
+        super.getConvertMap().put("-id", "-(id)");
 
-        convertMap.put("usersId", "(usersId)");
-        convertMap.put("-usersId", "-(usersId)");
+        super.getConvertMap().put("usersId", "(usersId)");
+        super.getConvertMap().put("-usersId", "-(usersId)");
 
-        convertMap.put("convertToDonation", "(convertToDonation)");
-        convertMap.put("-convertToDonation", "-(convertToDonation)");
+        super.getConvertMap().put("convertToDonation", "(convertToDonation)");
+        super.getConvertMap().put("-convertToDonation", "-(convertToDonation)");
 
-        convertMap.put("category", "(category)");
-        convertMap.put("-category", "-(category)");
+        super.getConvertMap().put("category", "(category)");
+        super.getConvertMap().put("-category", "-(category)");
 
-        convertMap.put("expiryDate", "(expiryDate)");
-        convertMap.put("-expiryDate", "-(expiryDate)");
+        super.getConvertMap().put("expiryDate", "(expiryDate)");
+        super.getConvertMap().put("-expiryDate", "-(expiryDate)");
 
-        convertMap.put("storageLocation", "(storageLocation)");
-        convertMap.put("-storageLocation", "-(storageLocation)");
+        super.getConvertMap().put("storageLocation", "(storageLocation)");
+        super.getConvertMap().put("-storageLocation", "-(storageLocation)");
     }
 }
