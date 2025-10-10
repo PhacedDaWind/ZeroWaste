@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class BrowseFoodItemResDTO {
     private Long id;
 
-    private Long userId;
+    private Long usersId;
 
     private Boolean convertToDonation;
 
@@ -24,7 +24,7 @@ public class BrowseFoodItemResDTO {
 
     private String storageLocation;
 
-    private String name;
+    private String userName;
 
     private Long quantity;
 
