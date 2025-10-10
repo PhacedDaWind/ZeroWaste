@@ -24,7 +24,7 @@ public interface BrowseFoodItemRepository extends JpaRepository<FoodItem,Long> {
             +"u.pickupLocation as pickupLocation,"
             +"u.contactMethod as contactMethod "
             +"FROM FoodItem u "
-            +"LEFT JOIN Users e "
+            +"LEFT JOIN u.user e "
             +"WHERE (:usersId IS NULL OR e.id=:usersId ) AND "
             +"(:convertToDonation IS NULL OR u.convertToDonation = :convertToDonation) AND "
             +"(:category IS NULL OR u.category LIKE :category) AND  "
