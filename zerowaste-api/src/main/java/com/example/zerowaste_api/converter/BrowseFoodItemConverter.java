@@ -18,17 +18,30 @@ public class BrowseFoodItemConverter {
                 .map(tuples->{
                     BrowseFoodItemResDTO resDTO = new BrowseFoodItemResDTO();
                     resDTO.setId(tuples.getId());
-                    resDTO.setUserId(tuples.getUserId());
+                    resDTO.setUsersId(tuples.getUsersId());
                     resDTO.setConvertToDonation(tuples.getConvertToDonation());
                     resDTO.setCategory(tuples.getCategory());
                     resDTO.setExpiryDate(tuples.getExpiryDate());
                     resDTO.setStorageLocation(tuples.getStorageLocation());
-                    resDTO.setName(tuples.getUserName());
+                    resDTO.setUserName(tuples.getUserName());
                     resDTO.setQuantity(tuples.getQuantity());
                     resDTO.setPickupLocation(tuples.getPickupLocation());
                     resDTO.setContactMethod(tuples.getContactMethod());
                     return resDTO;
                         })
                 .collect(Collectors.toList());
+    }
+
+    public BrowseFoodItemATResDTO browseFoodItemATResDTO(FoodItem foodItem) {
+        if(Objects.isNull(foodItem)) {
+            return null;
+        }
+        BrowseFoodItemATResDTO resDTO = new BrowseFoodItemATResDTO();
+        resDTO.setName(foodItem.getName());
+        resDTO.setQuantity(foodItem.getQuantity());
+        resDTO.setPickupLocation(foodItem.getPickupLocation());
+        resDTO.setContactMethod(foodItem.getContactMethod());
+        resDTO.setActionType(foodItem.getActionType());
+        return resDTO;
     }
 }
