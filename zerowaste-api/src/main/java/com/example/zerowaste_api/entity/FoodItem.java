@@ -24,7 +24,7 @@ public class FoodItem extends BaseDomain {
 
   private String name;
 
-  private BigDecimal quantity;
+  private Long quantity;
 
   private LocalDate expiryDate;
 

@@ -1,7 +1,6 @@
 package com.example.zerowaste_api.dto;
 
 import com.example.zerowaste_api.enums.FoodItemActionType;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.Setter;
 public class FoodItemReqDTO {
   private String name;
 
-  private BigDecimal quantity;
+  private Long quantity;
 
   private LocalDate expiryDate;
 
