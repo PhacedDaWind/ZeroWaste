@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,4 +35,6 @@ public class Users extends BaseDomain {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private LocalDateTime twoFactorExpiresAt;
 }

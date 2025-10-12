@@ -39,4 +39,11 @@ public class UsersDAO {
         return userRepository.findById(id).orElseThrow(
                 () -> new ServiceAppException(HttpStatus.BAD_REQUEST, UserErrorConstant.USER_NOT_FOUND));
     }
+
+    public Optional<Object> findByEmail(String email) {
+        if (StringUtils.isEmpty(email)) {
+            throw new RuntimeException("Email is empty");
+        }
+        return userRepository.findByEmail(email);
+    }
 }
