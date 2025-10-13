@@ -20,8 +20,6 @@ public class NotificationResDTO {
 
     private Date createdAt;
 
-    private Long usersId;
-
     private String username;
 
     private String message;

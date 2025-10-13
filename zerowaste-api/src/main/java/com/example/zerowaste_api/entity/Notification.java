@@ -20,8 +20,6 @@ import java.util.Date;
 @Table(name="notification")
 public class Notification extends BaseDomain {
 
-    private Long usersId;
-
     private String message;
 
     private Boolean markAsRead;

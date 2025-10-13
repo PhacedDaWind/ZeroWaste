@@ -6,8 +6,10 @@ import com.example.zerowaste_api.common.error.FoodItemErrorConstant;
 import com.example.zerowaste_api.common.error.NotificationErrorConstant;
 import com.example.zerowaste_api.converter.NotificationConverter;
 import com.example.zerowaste_api.dao.NotificationDAO;
+import com.example.zerowaste_api.dao.UsersDAO;
 import com.example.zerowaste_api.dto.NotificationResDTO;
 import com.example.zerowaste_api.entity.Notification;
+import com.example.zerowaste_api.entity.Users;
 import com.example.zerowaste_api.enums.NotificationType;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,12 @@ public class NotificationService {
 
     private final NotificationDAO notificationDAO;
     private final NotificationConverter notificationConverter;
+    private final UsersDAO usersDAO;
 
-    public NotificationService(NotificationDAO notificationDAO, NotificationConverter notificationConverter) {
+    public NotificationService(NotificationDAO notificationDAO, NotificationConverter notificationConverter, UsersDAO usersDAO) {
         this.notificationDAO = notificationDAO;
         this.notificationConverter = notificationConverter;
+        this.usersDAO = usersDAO;
     }
 
     public List<NotificationResDTO> readNotificationList(Long id, NotificationType notificationType) {
@@ -73,9 +77,10 @@ public class NotificationService {
                                      List<Long> quantity,
                                      LocalDate expiryDate,
                                      String meal) {
+        Users user = usersDAO.findById(userId);
         //new notifcation entity)
         Notification notification = new Notification();
-        notification.setUsersId(userId);
+        notification.setUser(user);
         notification.setNotifType(notificationType);
         notification.setMarkAsRead(false);
         String message = null;
