@@ -20,7 +20,6 @@ public class NotificationConverter {
         response.setId(notification.getId());
         response.setCreatedAt(notification.getCreatedAt());
         response.setUsername(notification.getUser().getUsername());
-        response.setUsername(notification.getUser().getUsername());
         response.setMessage(notification.getMessage());
         response.setMarkAsRead(notification.getMarkAsRead());
         response.setNotifType(notification.getNotifType());

@@ -27,5 +27,4 @@ public class NotificationResDTO {
     private Boolean markAsRead;
 
     private NotificationType notifType;
-
 }
