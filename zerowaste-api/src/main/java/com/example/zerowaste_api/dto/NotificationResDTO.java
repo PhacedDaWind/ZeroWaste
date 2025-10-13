@@ -22,6 +22,8 @@ public class NotificationResDTO {
 
     private Long usersId;
 
+    private String username;
+
     private String message;
 
     private Boolean markAsRead;

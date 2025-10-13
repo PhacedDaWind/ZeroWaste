@@ -29,4 +29,8 @@ public class Notification extends BaseDomain {
     @Column(name="notification_type")
     @Enumerated (EnumType.STRING)
     private NotificationType notifType;
+
+    @ManyToOne
+    @JoinColumn(name="users_id")
+    private Users user;
 }
