@@ -12,17 +12,20 @@ public class LoginResponse {
     private String status;
     private String message;
     private String token;
+    private Long userId;
 
     // Constructor for a successful login
-    public LoginResponse(String token) {
+    public LoginResponse(String token, Long userId) {
         this.status = "SUCCESS";
         this.message = "Login successful.";
         this.token = token;
+        this.userId = userId;
     }
 
     // Constructor for when 2FA is required
-    public LoginResponse(String status, String message) {
+    public LoginResponse(String status, String message, Long userId) {
         this.status = status;
         this.message = message;
+        this.userId = userId;
     }
 }
