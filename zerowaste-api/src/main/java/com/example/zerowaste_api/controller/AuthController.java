@@ -52,12 +52,12 @@ public class AuthController {
             if (user.getTwoFactorAuthEnabled()) {
                 // User has 2FA enabled, so send code and return an intermediate response
                 securityService.generateAndSendLogin2faCode(user.getUsername());
-                LoginResponse response = new LoginResponse("2FA_REQUIRED", "Please enter the code sent to your email.");
+                LoginResponse response = new LoginResponse("2FA_REQUIRED", "Please enter the code sent to your email.", user.getId());
                 return ResponseEntity.ok(response);
             } else {
                 // User does not have 2FA, generate token and log them in directly
                 String token = jwtService.generateToken((UserDetails) authentication.getPrincipal());
-                LoginResponse response = new LoginResponse(token);
+                LoginResponse response = new LoginResponse(token, user.getId());
                 return ResponseEntity.ok(response);
             }
         } catch (Exception e) {
@@ -81,10 +81,10 @@ public class AuthController {
                     .build();
 
             String token = jwtService.generateToken(userDetails);
-            return ResponseEntity.ok(new LoginResponse(token));
+            return ResponseEntity.ok(new LoginResponse(token, user.getId()));
 
         } catch (IllegalStateException | IllegalArgumentException e) {
-            LoginResponse errorResponse = new LoginResponse("ERROR", e.getMessage());
+            LoginResponse errorResponse = new LoginResponse("ERROR", e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
         }
     }
