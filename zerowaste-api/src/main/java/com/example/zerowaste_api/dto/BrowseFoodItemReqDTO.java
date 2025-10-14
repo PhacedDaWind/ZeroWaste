@@ -24,16 +24,22 @@ public class BrowseFoodItemReqDTO extends BaseViewOption {
 //    @ApiModelProperty("column(s)  - [id|usersId|convertToDonation|category|expiryDate|storageLocation]")
     private List<
             @Pattern(
-            regexp =  "^-{0,1}(id|usersId|convertToDonation|category|expiryDate|storageLocation)$",
-            message = "Unsupported sort column(s). Supported column(s) for - [id|usersId|convertToDonation|category|expiryDate|storageLocation]")
+            regexp =  "^-{0,1}(id|usersId|username|itemName|convertToDonation|category|expiryDate|storageLocation)$",
+            message = "Unsupported sort column(s). Supported column(s) for - [id|usersId|username|itemName|convertToDonation|category|expiryDate|storageLocation]")
             String> sort;
 
     BrowseFoodItemReqDTO() {
-        super.getConvertMap().put("id", "(id)");
-        super.getConvertMap().put("-id", "-(id)");
+        super.getConvertMap().put("id", "id");
+        super.getConvertMap().put("-id", "-id");
 
-        super.getConvertMap().put("usersId", "(usersId)");
-        super.getConvertMap().put("-usersId", "-(usersId)");
+        super.getConvertMap().put("usersId", "usersId");
+        super.getConvertMap().put("-usersId", "-usersId");
+
+        super.getConvertMap().put("username", "(username)");
+        super.getConvertMap().put("-username", "-(username)");
+
+        super.getConvertMap().put("itemName", "itemName");
+        super.getConvertMap().put("-itemName", "-itemName");
 
         super.getConvertMap().put("convertToDonation", "(convertToDonation)");
         super.getConvertMap().put("-convertToDonation", "-(convertToDonation)");
