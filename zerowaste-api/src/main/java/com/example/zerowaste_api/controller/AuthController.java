@@ -1,5 +1,7 @@
 package com.example.zerowaste_api.controller;
 
+import com.example.zerowaste_api.common.ServiceAppException;
+import com.example.zerowaste_api.common.error.UserErrorConstant;
 import com.example.zerowaste_api.dto.LoginRequest;
 import com.example.zerowaste_api.dto.LoginResponse;
 import com.example.zerowaste_api.dto.Verify2faRequest;
@@ -38,25 +40,30 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        // Step 1: Authenticate username and password
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-        );
+        try {
+            // Step 1: Authenticate username and password
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+            );
 
-        // Step 2: Check if 2FA is enabled
-        Users user = usersDAO.findByUsername(request.getUsername()).get();
+            // Step 2: Check if 2FA is enabled
+            Users user = usersDAO.findByUsername(request.getUsername()).get();
 
-        if (user.getTwoFactorAuthEnabled()) {
-            // User has 2FA enabled, so send code and return an intermediate response
-            securityService.generateAndSendLogin2faCode(user.getUsername());
-            LoginResponse response = new LoginResponse("2FA_REQUIRED", "Please enter the code sent to your email.");
-            return ResponseEntity.ok(response);
-        } else {
-            // User does not have 2FA, generate token and log them in directly
-            String token = jwtService.generateToken((UserDetails) authentication.getPrincipal());
-            LoginResponse response = new LoginResponse(token);
-            return ResponseEntity.ok(response);
+            if (user.getTwoFactorAuthEnabled()) {
+                // User has 2FA enabled, so send code and return an intermediate response
+                securityService.generateAndSendLogin2faCode(user.getUsername());
+                LoginResponse response = new LoginResponse("2FA_REQUIRED", "Please enter the code sent to your email.");
+                return ResponseEntity.ok(response);
+            } else {
+                // User does not have 2FA, generate token and log them in directly
+                String token = jwtService.generateToken((UserDetails) authentication.getPrincipal());
+                LoginResponse response = new LoginResponse(token);
+                return ResponseEntity.ok(response);
+            }
+        } catch (Exception e) {
+            throw new ServiceAppException(HttpStatus.BAD_REQUEST, UserErrorConstant.USER_INVALID_LOGIN);
         }
+
     }
 
     @PostMapping("/verify-2fa")

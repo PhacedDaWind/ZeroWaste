@@ -2,9 +2,11 @@ package com.example.zerowaste_api.dao;
 
 import com.example.zerowaste_api.common.ServiceAppException;
 import com.example.zerowaste_api.common.error.UserErrorConstant;
+import com.example.zerowaste_api.dto.UserDetailsTuple;
 import com.example.zerowaste_api.entity.Users;
 import com.example.zerowaste_api.repository.UserRepository;
 import io.micrometer.common.util.StringUtils;
+import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -45,5 +47,12 @@ public class UsersDAO {
             throw new RuntimeException("Email is empty");
         }
         return userRepository.findByEmail(email);
+    }
+
+    public UserDetailsTuple findUserDetailsTuple(@Min(1) Long id) {
+        if (Objects.isNull(id)) {
+            return null;
+        }
+        return userRepository.findUserDetailsTuple(id);
     }
 }

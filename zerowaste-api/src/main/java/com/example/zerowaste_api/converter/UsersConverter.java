@@ -1,8 +1,6 @@
 package com.example.zerowaste_api.converter;
 
-import com.example.zerowaste_api.dto.UserRegistrationReqDTO;
-import com.example.zerowaste_api.dto.UserRegistrationResDTO;
-import com.example.zerowaste_api.dto.UserResponseDTO;
+import com.example.zerowaste_api.dto.*;
 import com.example.zerowaste_api.entity.Users;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,5 +48,21 @@ public class UsersConverter {
         response.setTwoFactorAuthEnabled(user.getTwoFactorAuthEnabled());
         response.setStatus(user.getStatus());
         return response;
+    }
+
+    public UserDetailsResDTO toUserDetailsResDTO(UserDetailsTuple tuple) {
+        if (Objects.isNull(tuple)) {
+            return null;
+        }
+        UserDetailsResDTO userDetailsResDTO = new UserDetailsResDTO();
+        userDetailsResDTO.setId(tuple.getId());
+        userDetailsResDTO.setEmail(tuple.getEmail());
+        userDetailsResDTO.setUsername(tuple.getUsername());
+        userDetailsResDTO.setHouseholdSize(tuple.getHouseholdSize());
+        userDetailsResDTO.setStatus(tuple.getStatus());
+        userDetailsResDTO.setTwoFactorAuthEnabled(tuple.getTwoFactorAuthEnabled());
+        userDetailsResDTO.setTotalItems(tuple.getTotalItems());
+        userDetailsResDTO.setDonationsMade(tuple.getDonationsMade());
+        return userDetailsResDTO;
     }
 }
