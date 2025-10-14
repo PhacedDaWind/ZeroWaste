@@ -28,6 +28,8 @@ public class BrowseFoodItemConverter {
                     resDTO.setQuantity(tuples.getQuantity());
                     resDTO.setPickupLocation(tuples.getPickupLocation());
                     resDTO.setContactMethod(tuples.getContactMethod());
+                    resDTO.setActionType(tuples.getActionType());
+                    resDTO.setActionTypeLabel(Objects.nonNull(tuples.getActionType()) ? tuples.getActionType().getLabel() : null);
                     return resDTO;
                         })
                 .collect(Collectors.toList());

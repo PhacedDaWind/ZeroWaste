@@ -1,5 +1,7 @@
 package com.example.zerowaste_api.dto;
 
+import com.example.zerowaste_api.enums.FoodItemActionType;
+
 import java.time.LocalDate;
 
 public interface BrowseFoodItemTuple {
@@ -23,4 +25,6 @@ public interface BrowseFoodItemTuple {
     String getPickupLocation();
 
     String getContactMethod();
+
+    FoodItemActionType getActionType();
 }

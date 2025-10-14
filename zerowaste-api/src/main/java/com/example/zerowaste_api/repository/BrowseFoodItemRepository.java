@@ -2,6 +2,7 @@ package com.example.zerowaste_api.repository;
 
 import com.example.zerowaste_api.dto.BrowseFoodItemTuple;
 import com.example.zerowaste_api.entity.FoodItem;
+import com.example.zerowaste_api.enums.FoodItemActionType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,18 +24,21 @@ public interface BrowseFoodItemRepository extends JpaRepository<FoodItem,Long> {
             +"u.name as itemName, "
             +"u.quantity as quantity,"
             +"u.pickupLocation as pickupLocation,"
-            +"u.contactMethod as contactMethod "
+            +"u.contactMethod as contactMethod, " +
+            "u.actionType as actionType "
             +"FROM FoodItem u "
             +"LEFT JOIN u.user e "
             +"WHERE (:usersId IS NULL OR e.id=:usersId ) AND "
             +"(:convertToDonation IS NULL OR u.convertToDonation = :convertToDonation) AND "
             +"(:category IS NULL OR u.category LIKE :category) AND  "
             +"(:expiryDate IS NULL OR u.expiryDate=:expiryDate) AND "
-            +"(:storageLocation IS NULL OR u.storageLocation LIKE :storageLocation)")
+            +"(:storageLocation IS NULL OR u.storageLocation LIKE :storageLocation) AND " +
+            "(:actionType IS NULL OR u.actionType = :actionType)")
     Page<BrowseFoodItemTuple> getBrowse(Pageable pageable,
                                         @Param("usersId")Long usersId,
                                         @Param("convertToDonation")Boolean convertToDonation,
                                         @Param("category")String category,
                                         @Param("expiryDate") LocalDate expiryDate,
-                                        @Param("storageLocation")String storageLocation);
+                                        @Param("storageLocation")String storageLocation,
+                                        @Param("actionType") FoodItemActionType actionType);
 }
