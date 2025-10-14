@@ -25,7 +25,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseDTO<UserDetailsResDTO> readFoodItem(@PathVariable(name = "id") @Min(1) Long id) {
+    public ResponseDTO<UserDetailsResDTO> readUserDetails(@PathVariable(name = "id") @Min(1) Long id) {
         return createResponse(HttpStatus.OK, userService.read(id));
     }
 }
