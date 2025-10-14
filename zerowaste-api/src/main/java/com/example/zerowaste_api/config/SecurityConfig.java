@@ -54,6 +54,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/registration/register").permitAll()
                         .requestMatchers("/api/auth/verify-2fa").permitAll()
+                        .requestMatchers("/api/password-reset/request").permitAll()
+                        .requestMatchers("/api/password-reset/execute").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
