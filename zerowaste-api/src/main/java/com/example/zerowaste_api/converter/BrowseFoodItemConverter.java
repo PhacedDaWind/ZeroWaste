@@ -23,7 +23,8 @@ public class BrowseFoodItemConverter {
                     resDTO.setCategory(tuples.getCategory());
                     resDTO.setExpiryDate(tuples.getExpiryDate());
                     resDTO.setStorageLocation(tuples.getStorageLocation());
-                    resDTO.setUserName(tuples.getUserName());
+                    resDTO.setUsername(tuples.getUsername());
+                    resDTO.setItemName(tuples.getItemName());
                     resDTO.setQuantity(tuples.getQuantity());
                     resDTO.setPickupLocation(tuples.getPickupLocation());
                     resDTO.setContactMethod(tuples.getContactMethod());

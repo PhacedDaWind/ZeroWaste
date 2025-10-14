@@ -14,12 +14,13 @@ import java.time.LocalDate;
 @Repository
 public interface BrowseFoodItemRepository extends JpaRepository<FoodItem,Long> {
     @Query("SELECT u.id as id, "
-            +"e.id as usersId, "
+            +"e.id as usersId, " +
+            "e.username as username, "
             +"u.convertToDonation as convertToDonation, "
             +"u.category as category, "
             +"u.expiryDate as expiryDate,"
             +"u.storageLocation as storageLocation, "
-            +"u.name as userName, "
+            +"u.name as itemName, "
             +"u.quantity as quantity,"
             +"u.pickupLocation as pickupLocation,"
             +"u.contactMethod as contactMethod "

@@ -24,7 +24,8 @@ public class BrowseFoodItemResDTO {
 
     private String storageLocation;
 
-    private String userName;
+    private String username;
+    private String itemName;
 
     private Long quantity;
 
