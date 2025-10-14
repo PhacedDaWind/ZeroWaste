@@ -22,22 +22,27 @@ public class SecurityController extends BaseController {
         this.securityService = securityService;
     }
 
-    @PostMapping("/enable-2fa")
-    public ResponseDTO<?> enable2fa(@AuthenticationPrincipal UserDetails userDetails) {
-        // Get username from the authenticated principal
-        String username = userDetails.getUsername();
-        securityService.initiate2faSetup(username);
+    @PostMapping("/enable-2fa/{id}")
+    public ResponseDTO<?> enable2fa(@PathVariable Long id) {
+        securityService.initiate2faSetup(id);
         return createResponse(HttpStatus.OK, "A verification code has been sent to your email.");
     }
 
-    @PostMapping("/verify-2fa-setup")
+    @PostMapping("/disable-2fa/{id}")
+    public ResponseDTO<?> disable2fa(@PathVariable Long id) {
+        // Get username from the authenticated principal
+        securityService.disable2fa(id);
+        return createResponse(HttpStatus.OK, "2FA has been disabled");
+    }
+
+    @PostMapping("/verify-2fa-setup/{id}")
     public ResponseDTO<?> verify2faSetup(
-            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable Long id,
             @RequestBody Verify2faRequestDTO request) {
 
         try {
-            String username = userDetails.getUsername();
-            securityService.verify2faSetup(username, request.getVerificationCode(), request.getNewPassword());
+
+            securityService.verify2faSetup(id, request.getVerificationCode());
             return createResponse(HttpStatus.OK, "Two-factor authentication has been enabled successfully.");
         } catch (IllegalStateException | IllegalArgumentException e) {
       // Return a structured error response for invalid/expired codes

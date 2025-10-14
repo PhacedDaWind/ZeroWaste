@@ -27,11 +27,8 @@ public class SecurityService {
   }
 
   @Transactional
-  public void initiate2faSetup(String username) {
-    Users user =
-        usersDAO
-            .findByUsername(username)
-            .orElseThrow(() -> new RuntimeException("User not found: " + username));
+  public void initiate2faSetup(Long id) {
+    Users user = usersDAO.findById(id);
 
     String code = String.format("%06d", new SecureRandom().nextInt(999999));
     LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(CODE_EXPIRATION_MINUTES);
@@ -44,12 +41,16 @@ public class SecurityService {
     emailService.send2faCode(user.getEmail(), code);
   }
 
+  public void disable2fa(Long userId) {
+    Users user = usersDAO.findById(userId);
+
+    user.setTwoFactorAuthEnabled(Boolean.FALSE);
+    usersDAO.save(user);
+  }
+
   @Transactional
-  public void verify2faSetup(String username, String verificationCode, String newPassword) {
-    Users user =
-        usersDAO
-            .findByUsername(username)
-            .orElseThrow(() -> new RuntimeException("User not found: " + username));
+  public void verify2faSetup(Long id, String verificationCode) {
+    Users user = usersDAO.findById(id);
 
     if (user.getPasswordResetCode() == null
         || user.getTwoFactorExpiresAt().isBefore(LocalDateTime.now())) {
@@ -63,7 +64,6 @@ public class SecurityService {
 
     // On success, update user record
     user.setTwoFactorAuthEnabled(true);
-    user.setPassword(passwordEncoder.encode(newPassword));
 
     // Clear temporary code fields
     user.setPasswordResetCode(null);
