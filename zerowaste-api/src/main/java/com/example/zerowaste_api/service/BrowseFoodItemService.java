@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BrowseFoodItemService extends PaginateService {
@@ -45,13 +46,15 @@ public class BrowseFoodItemService extends PaginateService {
         String category = getLikeSearchOrNull(reqDTO.getCategory());
         LocalDate expiryDate = reqDTO.getExpiryDate();
         String storageLocation = getLikeSearchOrNull(reqDTO.getStorageLocation());
+        FoodItemActionType actionType = reqDTO.getActionType();
         return browseFoodItemDAO.getPage(
                 pageable,
                 usersId,
                 convertToDonation,
                 category,
                 expiryDate,
-                storageLocation);
+                storageLocation,
+                actionType);
     }
 
 

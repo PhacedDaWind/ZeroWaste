@@ -1,6 +1,7 @@
 package com.example.zerowaste_api.dto;
 
 
+import com.example.zerowaste_api.enums.FoodItemActionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,4 +33,8 @@ public class BrowseFoodItemResDTO {
     private String pickupLocation;
 
     private String contactMethod;
+
+    private FoodItemActionType actionType;
+
+    private String actionTypeLabel;
 }

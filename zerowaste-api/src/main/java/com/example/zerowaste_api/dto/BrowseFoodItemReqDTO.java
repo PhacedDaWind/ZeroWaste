@@ -1,6 +1,7 @@
 package com.example.zerowaste_api.dto;
 
 import com.example.zerowaste_api.common.BaseViewOption;
+import com.example.zerowaste_api.enums.FoodItemActionType;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,8 @@ public class BrowseFoodItemReqDTO extends BaseViewOption {
     private LocalDate expiryDate;
 
     private String storageLocation;
+
+    private FoodItemActionType actionType;
 
 //    @ApiModelProperty("column(s)  - [id|usersId|convertToDonation|category|expiryDate|storageLocation]")
     private List<
