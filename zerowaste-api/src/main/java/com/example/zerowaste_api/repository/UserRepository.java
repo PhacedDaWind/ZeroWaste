@@ -32,4 +32,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
             "WHERE u.id = :id " +
             "GROUP BY u.id", nativeQuery = true)
     UserDetailsTuple findUserDetailsTuple(@Param("id") Long id);
+
+    @Query("SELECT u FROM Users u WHERE u.email = ?1")
+    Optional<Users> findUserByEmail(String email);
 }

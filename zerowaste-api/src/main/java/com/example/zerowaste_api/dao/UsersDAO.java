@@ -49,6 +49,13 @@ public class UsersDAO {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<Users> findUserByEmail(String email) {
+        if (StringUtils.isEmpty(email)) {
+            throw new RuntimeException("Email is empty");
+        }
+        return userRepository.findUserByEmail(email);
+    }
+
     public UserDetailsTuple findUserDetailsTuple(@Min(1) Long id) {
         if (Objects.isNull(id)) {
             return null;

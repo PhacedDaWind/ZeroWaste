@@ -24,7 +24,7 @@ public class EmailService {
             message.setFrom("noreply@zerowasteapp.com"); // Set your "from" address
             message.setTo(to);
             message.setSubject("Your Two-Factor Authentication Code");
-            message.setText("Welcome to the Zero Waste App!\n\nYour verification code is: " + code + "\n\nThis code will expire in 15 minutes.");
+            message.setText("Welcome to the Zero Waste App!\n\nYour verification code is: " + code + "\n\nThis code will expire in 5 minutes.");
 
             // For debugging purposes, log the email
             log.info("Attempting to send 2FA email to: {}", to);
@@ -35,6 +35,28 @@ public class EmailService {
             log.info("2FA email sent successfully to: {}", to);
         } catch (MailException e) {
             log.error("Failed to send 2FA email to: {}", to, e);
+            // In a real application, you might want to re-throw this as a custom exception
+            throw new RuntimeException("Error while sending email. Please try again later.");
+        }
+    }
+
+    public void sendPasswordResetCode(String email, String code) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("noreply@zerowasteapp.com"); // Set your "from" address
+            message.setTo(email);
+            message.setSubject("Your Password Reset Code");
+            message.setText("Enter the verification code below in the app.\n\nYour verification code is: " + code + "\n\nThis code will expire in 5 minutes.");
+
+            // For debugging purposes, log the email
+            log.info("Attempting to send password reset email to: {}", email);
+            log.info("Email Body: {}", message.getText());
+
+            mailSender.send(message);
+
+            log.info("Password reset email sent successfully to: {}", email);
+        } catch (MailException e) {
+            log.error("Failed to send password reset email to: {}", email, e);
             // In a real application, you might want to re-throw this as a custom exception
             throw new RuntimeException("Error while sending email. Please try again later.");
         }

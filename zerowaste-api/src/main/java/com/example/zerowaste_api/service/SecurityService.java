@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SecurityService {
 
-  private static final int CODE_EXPIRATION_MINUTES = 15;
+  private static final int CODE_EXPIRATION_MINUTES = 5;
 
   private final UsersDAO usersDAO;
   private final PasswordEncoder passwordEncoder;
