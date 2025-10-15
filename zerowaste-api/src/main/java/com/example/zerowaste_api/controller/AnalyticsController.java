@@ -37,7 +37,6 @@ public class AnalyticsController extends BaseController {
     return createResponse(HttpStatus.OK, analyticsService.aggregate(userId, period, byCategory, fromD, toD));
   }
 
-  
   @GetMapping("/food-analysis")
   public ResponseDTO<Map<String,Object>> foodAnalysis(
       @RequestParam Long userId,

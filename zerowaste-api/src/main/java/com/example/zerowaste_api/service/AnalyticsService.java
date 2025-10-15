@@ -3,7 +3,6 @@ package com.example.zerowaste_api.service;
 import com.example.zerowaste_api.entity.FoodItem;
 import com.example.zerowaste_api.enums.FoodItemActionType;
 import com.example.zerowaste_api.repository.FoodItemRepository;
-import com.example.zerowaste_api.repository.WeeklyMealPlanRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,7 +10,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 /**
  * Extended analytics to provide weekly/monthly aggregations and by-category breakdowns,
@@ -21,12 +19,9 @@ import java.util.stream.Collectors;
 public class AnalyticsService {
 
   private final FoodItemRepository foodItemRepository;
-  private final WeeklyMealPlanRepository weeklyMealPlanRepository;
 
-  public AnalyticsService(FoodItemRepository foodItemRepository,
-                          WeeklyMealPlanRepository weeklyMealPlanRepository) {
+  public AnalyticsService(FoodItemRepository foodItemRepository) {
     this.foodItemRepository = foodItemRepository;
-    this.weeklyMealPlanRepository = weeklyMealPlanRepository;
   }
 
   public Map<String, Object> basicFoodAnalytics(Long userId) {
