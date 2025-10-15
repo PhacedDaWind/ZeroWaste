@@ -46,17 +46,17 @@ public class FoodItemConverter {
         return null;
       }
       foodItem.setName(foodItemReqDTO.getName());
-    foodItem.setQuantity(foodItem.getQuantity());
-    foodItem.setExpiryDate(foodItem.getExpiryDate());
-    foodItem.setCategory(foodItem.getCategory());
-    foodItem.setStorageLocation(foodItem.getStorageLocation());
-    foodItem.setRemarks(foodItem.getRemarks());
-    foodItem.setContactMethod(foodItem.getContactMethod());
-    foodItem.setPickupLocation(foodItem.getPickupLocation());
-    foodItem.setActionType(foodItem.getActionType());
+    foodItem.setQuantity(foodItemReqDTO.getQuantity());
+    foodItem.setExpiryDate(foodItemReqDTO.getExpiryDate());
+    foodItem.setCategory(foodItemReqDTO.getCategory());
+    foodItem.setStorageLocation(foodItemReqDTO.getStorageLocation());
+    foodItem.setRemarks(foodItemReqDTO.getRemarks());
+    foodItem.setContactMethod(foodItemReqDTO.getContactMethod());
+    foodItem.setPickupLocation(foodItemReqDTO.getPickupLocation());
+    foodItem.setActionType(foodItemReqDTO.getActionType());
     foodItem.setUser(usersDAO.findById(foodItemReqDTO.getUserId()));
-    foodItem.setConvertToDonation(foodItem.getConvertToDonation());
-    foodItem.setReservedQuantity(foodItem.getReservedQuantity());
+    foodItem.setConvertToDonation(foodItemReqDTO.getConvertToDonation());
+    foodItem.setReservedQuantity(foodItemReqDTO.getReservedQuantity());
     return foodItem;
   }
 }
