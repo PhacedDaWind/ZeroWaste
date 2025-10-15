@@ -3,6 +3,7 @@ package com.example.zerowaste_api.service;
 import com.example.zerowaste_api.common.ServiceAppException;
 import com.example.zerowaste_api.dao.UsersDAO;
 import com.example.zerowaste_api.entity.Users;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 
 @Service
+@Slf4j
 public class PasswordResetService {
     private static final int CODE_EXPIRATION_MINUTES = 5;
 
@@ -29,15 +31,20 @@ public class PasswordResetService {
     public void initiatePasswordReset(String email) {
         // Find user by email. If not found, we don't throw an error to prevent email enumeration attacks.
         usersDAO.findUserByEmail(email).ifPresent(user -> {
-            String code = String.format("%06d", new SecureRandom().nextInt(999999));
-            LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(CODE_EXPIRATION_MINUTES);
+            try {
+                String code = String.format("%06d", new SecureRandom().nextInt(999999));
+                LocalDateTime expiryTime = LocalDateTime.now().plusMinutes(CODE_EXPIRATION_MINUTES);
 
-            user.setPasswordResetCode(passwordEncoder.encode(code));
-            user.setTwoFactorExpiresAt(expiryTime);
-            usersDAO.save(user);
+                user.setPasswordResetCode(passwordEncoder.encode(code));
+                user.setTwoFactorExpiresAt(expiryTime);
+                usersDAO.save(user);
 
-            // You might want to create a new email template/method for this in EmailService
-            emailService.sendPasswordResetCode(user.getEmail(), code);
+                // You might want to create a new email template/method for this in EmailService
+                emailService.sendPasswordResetCode(user.getEmail(), code);
+            } catch (Exception e) {
+                log.error("Failed to initiate password reset for user: {}", email, e);
+            }
+
         });
     }
 
