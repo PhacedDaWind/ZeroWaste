@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 /**
  * Extended analytics to provide weekly/monthly aggregations and by-category breakdowns,
  * plus food analysis metrics (total saved from waste, number of donations, progress indicators).
