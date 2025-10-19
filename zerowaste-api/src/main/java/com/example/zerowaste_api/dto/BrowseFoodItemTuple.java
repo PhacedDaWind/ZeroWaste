@@ -18,6 +18,7 @@ public interface BrowseFoodItemTuple {
     String getStorageLocation();
 
     String getUsername();
+
     String getItemName();
 
     Long getQuantity();

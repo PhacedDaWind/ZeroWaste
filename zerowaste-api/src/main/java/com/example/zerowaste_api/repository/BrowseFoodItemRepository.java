@@ -30,6 +30,7 @@ public interface BrowseFoodItemRepository extends JpaRepository<FoodItem,Long> {
             +"LEFT JOIN u.user e "
             +"WHERE (:usersId IS NULL OR e.id=:usersId ) AND "
             +"(:convertToDonation IS NULL OR u.convertToDonation = :convertToDonation) AND "
+            +"(:itemName IS NULL OR u.name LIKE :itemName) AND "
             +"(:category IS NULL OR u.category LIKE :category) AND  "
             +"(:expiryDate IS NULL OR u.expiryDate=:expiryDate) AND "
             +"(:storageLocation IS NULL OR u.storageLocation LIKE :storageLocation) AND " +
@@ -37,6 +38,7 @@ public interface BrowseFoodItemRepository extends JpaRepository<FoodItem,Long> {
     Page<BrowseFoodItemTuple> getBrowse(Pageable pageable,
                                         @Param("usersId")Long usersId,
                                         @Param("convertToDonation")Boolean convertToDonation,
+                                        @Param("itemName")String itemName,
                                         @Param("category")String category,
                                         @Param("expiryDate") LocalDate expiryDate,
                                         @Param("storageLocation")String storageLocation,

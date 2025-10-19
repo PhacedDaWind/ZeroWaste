@@ -43,6 +43,7 @@ public class BrowseFoodItemService extends PaginateService {
         Pageable pageable=getPageableQuery(reqDTO.getPage(),reqDTO.getPageSize(),sort);
         Long usersId = reqDTO.getUsersId();
         Boolean convertToDonation=reqDTO.getConvertToDonation();
+        String itemName = getLikeSearchOrNull(reqDTO.getItemName());
         String category = getLikeSearchOrNull(reqDTO.getCategory());
         LocalDate expiryDate = reqDTO.getExpiryDate();
         String storageLocation = getLikeSearchOrNull(reqDTO.getStorageLocation());
@@ -51,6 +52,7 @@ public class BrowseFoodItemService extends PaginateService {
                 pageable,
                 usersId,
                 convertToDonation,
+                itemName,
                 category,
                 expiryDate,
                 storageLocation,

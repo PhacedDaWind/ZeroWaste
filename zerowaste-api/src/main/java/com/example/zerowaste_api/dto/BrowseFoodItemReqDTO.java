@@ -16,6 +16,8 @@ public class BrowseFoodItemReqDTO extends BaseViewOption {
 
     private Boolean convertToDonation;
 
+    private String itemName;
+
     private String category;
 
     private LocalDate expiryDate;
