@@ -66,8 +66,9 @@ public class BrowseFoodItemService extends PaginateService {
         return new PageWrapperVO<>(tuples,content);
     }
 
-    public BrowseFoodItemATResDTO chooseActionType(Long Id, FoodItemActionType foodItemActionType){
+    public BrowseFoodItemATResDTO chooseActionType(Long Id, Boolean convertToDonation, FoodItemActionType foodItemActionType){
         FoodItem foodItem=browseFoodItemDAO.getFoodItem(Id);
+        foodItem.setConvertToDonation(convertToDonation);
         foodItem.setActionType(foodItemActionType);
         browseFoodItemDAO.save(foodItem);
         return browseFoodItemConverter.browseFoodItemATResDTO(foodItem);

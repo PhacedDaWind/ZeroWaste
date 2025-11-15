@@ -40,9 +40,9 @@ public class FoodInventoryController extends BaseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseDTO<FoodItemResDTO> updateFoodItem(@PathVariable Long id, @RequestBody FoodItemReqDTO foodItemReqDTO) {
-        return createResponse(HttpStatus.OK, foodInventoryService.update(id, foodItemReqDTO));
-    }
+        public ResponseDTO<FoodItemResDTO> updateFoodItem(@PathVariable Long id, @RequestBody FoodItemReqDTO foodItemReqDTO) {
+            return createResponse(HttpStatus.OK, foodInventoryService.update(id, foodItemReqDTO));
+        }
 
     @DeleteMapping("/{id}")
     public ResponseDTO<String> deleteFoodItem(@PathVariable Long id) {

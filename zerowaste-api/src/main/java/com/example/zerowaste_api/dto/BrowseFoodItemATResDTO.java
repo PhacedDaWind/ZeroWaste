@@ -17,5 +17,7 @@ public class BrowseFoodItemATResDTO {
 
     private String contactMethod;
 
+    private Boolean convertToDonation;
+
     private FoodItemActionType actionType;
 }

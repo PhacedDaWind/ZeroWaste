@@ -44,6 +44,7 @@ public class BrowseFoodItemConverter {
         resDTO.setQuantity(foodItem.getQuantity());
         resDTO.setPickupLocation(foodItem.getPickupLocation());
         resDTO.setContactMethod(foodItem.getContactMethod());
+        resDTO.setConvertToDonation(foodItem.getConvertToDonation());
         resDTO.setActionType(foodItem.getActionType());
         return resDTO;
     }
