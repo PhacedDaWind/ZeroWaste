@@ -7,6 +7,7 @@ import com.example.zerowaste_api.converter.BrowseFoodItemConverter;
 import com.example.zerowaste_api.converter.FoodItemConverter;
 import com.example.zerowaste_api.dao.BrowseFoodItemDAO;
 import com.example.zerowaste_api.dao.FoodItemDAO;
+import com.example.zerowaste_api.dao.UsersDAO;
 import com.example.zerowaste_api.dto.*;
 
 import com.example.zerowaste_api.entity.FoodItem;
@@ -28,12 +29,15 @@ public class BrowseFoodItemService extends PaginateService {
     private final FoodItemDAO foodItemDAO;
     private final BrowseFoodItemConverter browseFoodItemConverter;
     private final NotificationService notificationService;
+    private final UsersDAO usersDAO;
 
-    public BrowseFoodItemService(BrowseFoodItemDAO browseFoodItemDAO, BrowseFoodItemConverter browseFoodItemConverter, FoodItemDAO foodItemDAO, NotificationService notificationService) {
+
+    public BrowseFoodItemService(BrowseFoodItemDAO browseFoodItemDAO, BrowseFoodItemConverter browseFoodItemConverter, FoodItemDAO foodItemDAO, NotificationService notificationService, UsersDAO usersDAO) {
         this.browseFoodItemDAO = browseFoodItemDAO;
         this.browseFoodItemConverter = browseFoodItemConverter;
         this.foodItemDAO = foodItemDAO;
         this.notificationService = notificationService;
+        this.usersDAO = usersDAO;
     }
 
     @Override
@@ -69,13 +73,22 @@ public class BrowseFoodItemService extends PaginateService {
         return new PageWrapperVO<>(tuples,content);
     }
 
-    public BrowseFoodItemATResDTO chooseActionType(Long Id, Boolean convertToDonation, FoodItemActionType foodItemActionType){
-        FoodItem foodItem=browseFoodItemDAO.getFoodItem(Id);
-        foodItem.setConvertToDonation(convertToDonation);
+    public BrowseFoodItemATResDTO chooseActionType(Long Id, Boolean convertToDonation, FoodItemActionType foodItemActionType, Long userId) {
+        FoodItem foodItem = browseFoodItemDAO.getFoodItem(Id);
         foodItem.setActionType(foodItemActionType);
+        if (foodItem.getUser().getId() != userId) {
+            foodItem.setConvertToDonation(false);
+            foodItem.setUser(usersDAO.findById(userId));
+        }
         browseFoodItemDAO.save(foodItem);
-        return browseFoodItemConverter.browseFoodItemATResDTO(foodItem);
+        notificationService.create(NotificationType.DONATION_CLAIMED,
+                userId,
+                null,
+                null,
+                null,
+                null);
 
+        return browseFoodItemConverter.browseFoodItemATResDTO(foodItem);
     }
 
 }

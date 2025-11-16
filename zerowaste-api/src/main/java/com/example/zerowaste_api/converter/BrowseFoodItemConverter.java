@@ -46,6 +46,7 @@ public class BrowseFoodItemConverter {
         resDTO.setContactMethod(foodItem.getContactMethod());
         resDTO.setConvertToDonation(foodItem.getConvertToDonation());
         resDTO.setActionType(foodItem.getActionType());
+        resDTO.setUserId((foodItem.getUser().getId()));
         return resDTO;
     }
 }
