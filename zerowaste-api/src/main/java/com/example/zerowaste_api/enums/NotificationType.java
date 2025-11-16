@@ -35,36 +35,17 @@ public enum NotificationType implements BaseEnumInterface {
         String result= label;
         switch (this){
             case FOOD_INVENTORY_ALERT:
-                if(extra.length>=2) {
-                    List<String> food=(List<String>)extra[0];
-                    String foodString = String.join(", ", food);
-                    result = result.replace("$food", foodString);
-                    LocalDate expiry=(LocalDate)extra[1];
-                    result = result.replace("$date", formDate(expiry));
-                }
+                    String food=(String)extra[0];
+                    result = result.replace("$food", food);
+                    LocalDate expiryDate=(LocalDate)extra[1];
+                    result = result.replace("$date", formDate(expiryDate));
                 break;
             case DONATION_POSTED:
-                if(extra.length>=2 && extra[0] != null && extra[1] != null) {
                     @SuppressWarnings("unchecked")
-                         List<String> foods=(List<String>) extra[0];
+                         String foods=(String) extra[0];
                     @SuppressWarnings("unchecked")
-                            List<Long> quantity=(List<Long>) extra[1];
-
-                    if(foods.size()!=quantity.size()) {
-                        throw new IllegalArgumentException("Number of foods and quantity are not equal");
-                    }
-                    String foodList="";
-                    for(int i=0;i<foods.size();i++) {
-                        foodList=foodList.concat(foods.get(i))
-                                .concat("(")
-                                .concat(String.valueOf(quantity.get(i)))
-                                .concat(")");
-                        if(i<foods.size()-1){
-                            foodList=foodList.concat(",");
-                        }
-                    }
-                    result = result.replace("$foods", foodList);
-                }
+                            Long quantity=(Long) extra[1];
+                    result = result.replace("$foods", foods + " (" + quantity + ")");
                 break;
             case MEAL_REMINDER:
                 if(extra.length>=2) {
