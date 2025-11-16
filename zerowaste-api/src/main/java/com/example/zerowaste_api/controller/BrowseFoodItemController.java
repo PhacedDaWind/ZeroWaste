@@ -35,7 +35,8 @@ public class    BrowseFoodItemController extends BaseController {
     @PutMapping("/update/{id}")
     public ResponseDTO<BrowseFoodItemATResDTO> chooseActionType(@PathVariable Long id,
                                                                 @RequestParam Boolean convertToDonation,
-                                                                @RequestParam(required = false) FoodItemActionType  foodItemActionType) {
-        return createResponse(HttpStatus.OK, browseFoodItemService.chooseActionType(id,convertToDonation, foodItemActionType));
+                                                                @RequestParam(required = false) FoodItemActionType  foodItemActionType,
+                                                                @RequestParam Long userId) {
+        return createResponse(HttpStatus.OK, browseFoodItemService.chooseActionType(id,convertToDonation, foodItemActionType, userId));
     }
 }

@@ -7,10 +7,12 @@ import com.example.zerowaste_api.converter.BrowseFoodItemConverter;
 import com.example.zerowaste_api.converter.FoodItemConverter;
 import com.example.zerowaste_api.dao.BrowseFoodItemDAO;
 import com.example.zerowaste_api.dao.FoodItemDAO;
+import com.example.zerowaste_api.dao.UsersDAO;
 import com.example.zerowaste_api.dto.*;
 
 import com.example.zerowaste_api.entity.FoodItem;
 import com.example.zerowaste_api.enums.FoodItemActionType;
+import com.example.zerowaste_api.enums.NotificationType;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,11 +28,19 @@ public class BrowseFoodItemService extends PaginateService {
     private final BrowseFoodItemDAO browseFoodItemDAO;
     private final FoodItemDAO foodItemDAO;
     private final BrowseFoodItemConverter browseFoodItemConverter;
+    private final UsersDAO usersDAO;
+    private final NotificationService notificationService;
 
-    public BrowseFoodItemService(BrowseFoodItemDAO browseFoodItemDAO, BrowseFoodItemConverter browseFoodItemConverter, FoodItemDAO foodItemDAO) {
+    public BrowseFoodItemService(BrowseFoodItemDAO browseFoodItemDAO,
+                                 BrowseFoodItemConverter browseFoodItemConverter,
+                                 FoodItemDAO foodItemDAO,
+                                 UsersDAO usersDAO,
+                                 NotificationService notificationService) {
         this.browseFoodItemDAO = browseFoodItemDAO;
         this.browseFoodItemConverter = browseFoodItemConverter;
         this.foodItemDAO = foodItemDAO;
+        this.usersDAO = usersDAO;
+        this.notificationService= notificationService;
     }
 
     @Override
@@ -39,10 +49,10 @@ public class BrowseFoodItemService extends PaginateService {
     }
 
     public Page<BrowseFoodItemTuple> toBrowseFoodItemList(BrowseFoodItemReqDTO reqDTO) {
-        Sort sort= getSortQueryV2(reqDTO.getConvertedSort(reqDTO.getSort()));
-        Pageable pageable=getPageableQuery(reqDTO.getPage(),reqDTO.getPageSize(),sort);
+        Sort sort = getSortQueryV2(reqDTO.getConvertedSort(reqDTO.getSort()));
+        Pageable pageable = getPageableQuery(reqDTO.getPage(), reqDTO.getPageSize(), sort);
         Long usersId = reqDTO.getUsersId();
-        Boolean convertToDonation=reqDTO.getConvertToDonation();
+        Boolean convertToDonation = reqDTO.getConvertToDonation();
         String itemName = getLikeSearchOrNull(reqDTO.getItemName());
         String category = getLikeSearchOrNull(reqDTO.getCategory());
         LocalDate expiryDate = reqDTO.getExpiryDate();
@@ -60,19 +70,29 @@ public class BrowseFoodItemService extends PaginateService {
     }
 
 
-    public PageWrapperVO<BrowseFoodItemResDTO> getBrowseList(BrowseFoodItemReqDTO browseFoodItemReqDTO){
-        Page<BrowseFoodItemTuple> tuples= toBrowseFoodItemList(browseFoodItemReqDTO);
-        List<BrowseFoodItemResDTO> content=browseFoodItemConverter.toBrowseFoodItemResDTO(tuples.getContent());
-        return new PageWrapperVO<>(tuples,content);
+    public PageWrapperVO<BrowseFoodItemResDTO> getBrowseList(BrowseFoodItemReqDTO browseFoodItemReqDTO) {
+        Page<BrowseFoodItemTuple> tuples = toBrowseFoodItemList(browseFoodItemReqDTO);
+        List<BrowseFoodItemResDTO> content = browseFoodItemConverter.toBrowseFoodItemResDTO(tuples.getContent());
+        return new PageWrapperVO<>(tuples, content);
     }
 
-    public BrowseFoodItemATResDTO chooseActionType(Long Id, Boolean convertToDonation, FoodItemActionType foodItemActionType){
-        FoodItem foodItem=browseFoodItemDAO.getFoodItem(Id);
-        foodItem.setConvertToDonation(convertToDonation);
+    public BrowseFoodItemATResDTO chooseActionType(Long Id, Boolean convertToDonation, FoodItemActionType foodItemActionType, Long userId) {
+        FoodItem foodItem = browseFoodItemDAO.getFoodItem(Id);
         foodItem.setActionType(foodItemActionType);
+        if (foodItem.getUser().getId() != userId) {
+            foodItem.setConvertToDonation(false);
+            foodItem.setUser(usersDAO.findById(userId));
+        }
         browseFoodItemDAO.save(foodItem);
-        return browseFoodItemConverter.browseFoodItemATResDTO(foodItem);
 
+        notificationService.create(NotificationType.DONATION_CLAIMED,
+                userId,
+                null,
+                null,
+                null,
+                null);
+
+        return browseFoodItemConverter.browseFoodItemATResDTO(foodItem);
     }
 
 }

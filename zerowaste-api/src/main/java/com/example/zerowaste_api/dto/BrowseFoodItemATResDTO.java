@@ -20,4 +20,6 @@ public class BrowseFoodItemATResDTO {
     private Boolean convertToDonation;
 
     private FoodItemActionType actionType;
+
+    private Long userId;
 }
