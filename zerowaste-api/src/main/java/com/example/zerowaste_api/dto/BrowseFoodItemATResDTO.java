@@ -22,4 +22,5 @@ public class BrowseFoodItemATResDTO {
     private FoodItemActionType actionType;
 
     private Long userId;
+
 }

@@ -49,4 +49,5 @@ public class BrowseFoodItemConverter {
         resDTO.setUserId((foodItem.getUser().getId()));
         return resDTO;
     }
+
 }

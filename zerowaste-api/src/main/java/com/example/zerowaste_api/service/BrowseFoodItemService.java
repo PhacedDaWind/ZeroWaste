@@ -80,6 +80,7 @@ public class BrowseFoodItemService extends PaginateService {
             foodItem.setConvertToDonation(false);
             foodItem.setUser(usersDAO.findById(userId));
         }
+
         browseFoodItemDAO.save(foodItem);
         notificationService.create(NotificationType.DONATION_CLAIMED,
                 userId,
