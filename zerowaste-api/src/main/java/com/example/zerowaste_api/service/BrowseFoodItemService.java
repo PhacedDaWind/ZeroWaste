@@ -11,6 +11,7 @@ import com.example.zerowaste_api.dto.*;
 
 import com.example.zerowaste_api.entity.FoodItem;
 import com.example.zerowaste_api.enums.FoodItemActionType;
+import com.example.zerowaste_api.enums.NotificationType;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,11 +27,13 @@ public class BrowseFoodItemService extends PaginateService {
     private final BrowseFoodItemDAO browseFoodItemDAO;
     private final FoodItemDAO foodItemDAO;
     private final BrowseFoodItemConverter browseFoodItemConverter;
+    private final NotificationService notificationService;
 
-    public BrowseFoodItemService(BrowseFoodItemDAO browseFoodItemDAO, BrowseFoodItemConverter browseFoodItemConverter, FoodItemDAO foodItemDAO) {
+    public BrowseFoodItemService(BrowseFoodItemDAO browseFoodItemDAO, BrowseFoodItemConverter browseFoodItemConverter, FoodItemDAO foodItemDAO, NotificationService notificationService) {
         this.browseFoodItemDAO = browseFoodItemDAO;
         this.browseFoodItemConverter = browseFoodItemConverter;
         this.foodItemDAO = foodItemDAO;
+        this.notificationService = notificationService;
     }
 
     @Override

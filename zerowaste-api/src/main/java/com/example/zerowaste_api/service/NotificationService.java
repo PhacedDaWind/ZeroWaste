@@ -69,8 +69,8 @@ public class NotificationService {
 
     public NotificationResDTO create(NotificationType notificationType,
                                      Long userId,
-                                     List<String> itemName,
-                                     List<Long> quantity,
+                                     String itemName,
+                                     Long quantity,
                                      LocalDate expiryDate,
                                      String meal) {
         //new notifcation entity)
@@ -96,7 +96,7 @@ public class NotificationService {
                 break;
 
             case DONATION_POSTED:
-                if (itemName == null || quantity == null || itemName.size() != quantity.size()) {
+                if (itemName == null || quantity == null) {
                     throw new ServiceAppException(HttpStatus.BAD_REQUEST,
                             NotificationErrorConstant.NOTIFICATION_INVALID_REQUEST);
                 }

@@ -20,9 +20,9 @@ public class NotificationReqDTO {
 
     private Long usersId;
 
-    private List<String> itemName;
+    private String itemName;
 
-    private List<Long> quantity;
+    private Long quantity;
 
     private LocalDate expiryDate;
 
