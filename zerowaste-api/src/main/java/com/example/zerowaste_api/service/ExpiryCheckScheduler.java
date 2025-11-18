@@ -28,9 +28,10 @@ public class ExpiryCheckScheduler {
         this.notificationService = notificationService;
     }
 
+    //    @Scheduled(cron = "0 * * * * *") // testing purposes
     // 9am everyday
     @Scheduled(cron = "0 0 9 * * *")
-    @Transactional(readOnly = true)
+    @Transactional
     public void checkForSoonExpiringItems() {
         logger.info("Starting daily check for expiring food items...");
 
