@@ -2,20 +2,17 @@ package com.example.zerowaste_api.controller;
 
 import com.example.zerowaste_api.common.BaseController;
 import com.example.zerowaste_api.common.ResponseDTO;
+import com.example.zerowaste_api.dto.ExpiringItemResDTO;
 import com.example.zerowaste_api.dto.FoodItemReqDTO;
 import com.example.zerowaste_api.dto.FoodItemResDTO;
 import com.example.zerowaste_api.service.FoodInventoryService;
 import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Validated
 @RestController
@@ -48,5 +45,13 @@ public class FoodInventoryController extends BaseController {
     public ResponseDTO<String> deleteFoodItem(@PathVariable Long id) {
         foodInventoryService.delete(id);
         return createResponse(HttpStatus.OK, "OK");
+    }
+
+    @GetMapping("/expiring-list")
+    public ResponseDTO<List<ExpiringItemResDTO>> getExpiringItems(@RequestParam Long userId) {
+
+        List<ExpiringItemResDTO> expiringItems = foodInventoryService.getExpiringItemsList(userId);
+
+        return createResponse(HttpStatus.OK, expiringItems);
     }
 }

@@ -4,6 +4,7 @@ import com.example.zerowaste_api.common.ServiceAppException;
 import com.example.zerowaste_api.common.error.FoodItemErrorConstant;
 import com.example.zerowaste_api.converter.FoodItemConverter;
 import com.example.zerowaste_api.dao.FoodItemDAO;
+import com.example.zerowaste_api.dto.ExpiringItemResDTO;
 import com.example.zerowaste_api.dto.FoodItemReqDTO;
 import com.example.zerowaste_api.dto.FoodItemResDTO;
 import com.example.zerowaste_api.entity.FoodItem;
@@ -12,8 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FoodInventoryService {
@@ -239,5 +244,47 @@ public class FoodInventoryService {
             throw new ServiceAppException(HttpStatus.BAD_REQUEST, FoodItemErrorConstant.FOOD_ITEM_NOT_FOUND);
         }
         foodItemDAO.delete(id);
+    }
+
+    public List<ExpiringItemResDTO> getExpiringItemsList(Long userId) {
+
+        LocalDate today = LocalDate.now();
+        // Calculate the date that is exactly 3 days from now.
+        // This makes the range today (0 days) up to 3 days from now (inclusive).
+        LocalDate expiryLimitDate = today.plusDays(3);
+
+        // 1. Fetch only items expiring within the next 3 days
+        List<FoodItem> foodItems = foodItemDAO.findAllByUserIdAndConvertToDonationFalseAndExpiryDateBetweenOrderByExpiryDateAsc(
+                userId,
+                today,
+                expiryLimitDate
+        );
+
+        // 2. Map the filtered items and calculate the expiry string
+        return foodItems.stream()
+                .map(item -> {
+                    long days = ChronoUnit.DAYS.between(today, item.getExpiryDate());
+                    String expiryString = calculateExpiryString(days); // Reusing the helper function
+
+                    return ExpiringItemResDTO.builder()
+                            .id(item.getId())
+                            .foodName(item.getName())
+                            .quantity(item.getQuantity())
+                            .daysUntilExpiry(expiryString)
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+
+    // Helper function remains the same
+    private String calculateExpiryString(long days) {
+        if (days == 0) {
+            return "Expires Today";
+        } else if (days > 0) {
+            return days + " day" + (days > 1 ? "s" : "");
+        } else { // Handle expired items that somehow still met the criteria (e.g., expired today)
+            long daysAgo = Math.abs(days);
+            return "Expired " + daysAgo + " day" + (daysAgo > 1 ? "s" : "") + " ago";
+        }
     }
 }
