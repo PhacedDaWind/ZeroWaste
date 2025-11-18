@@ -59,4 +59,23 @@ public class FoodItemConverter {
     foodItem.setReservedQuantity(foodItemReqDTO.getReservedQuantity());
     return foodItem;
   }
+
+  public FoodItem copyFoodItem(FoodItem foodItem, FoodItem existingItem) {
+      if (Objects.isNull(existingItem)) {
+        return null;
+      }
+    foodItem.setName(existingItem.getName());
+    foodItem.setQuantity(existingItem.getQuantity());
+    foodItem.setExpiryDate(existingItem.getExpiryDate());
+    foodItem.setCategory(existingItem.getCategory());
+    foodItem.setStorageLocation(existingItem.getStorageLocation());
+    foodItem.setRemarks(existingItem.getRemarks());
+    foodItem.setContactMethod(existingItem.getContactMethod());
+    foodItem.setPickupLocation(existingItem.getPickupLocation());
+    foodItem.setActionType(existingItem.getActionType());
+    foodItem.setUser(existingItem.getUser());
+    foodItem.setConvertToDonation(existingItem.getConvertToDonation());
+    foodItem.setReservedQuantity(existingItem.getReservedQuantity());
+    return foodItem;
+  }
 }

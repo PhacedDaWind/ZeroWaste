@@ -33,4 +33,6 @@ public class FoodItemReqDTO {
   private Boolean convertToDonation;
 
   private Long reservedQuantity;
+
+  private Long donationQuantity;
 }

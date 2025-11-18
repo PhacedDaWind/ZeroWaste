@@ -5,9 +5,11 @@ import com.example.zerowaste_api.common.error.FoodItemErrorConstant;
 import com.example.zerowaste_api.common.error.UserErrorConstant;
 import com.example.zerowaste_api.entity.FoodItem;
 import com.example.zerowaste_api.repository.FoodItemRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -36,5 +38,9 @@ public class FoodItemDAO {
       throw new ServiceAppException(HttpStatus.BAD_REQUEST, FoodItemErrorConstant.FOOD_ITEM_NOT_FOUND);
     }
     foodItemRepository.deleteById(id);
+  }
+
+  public Optional<FoodItem> findDuplicateItem(Long userId, String name, LocalDate expiryDate, Boolean isDonation) {
+    return foodItemRepository.findDuplicateItem(userId, name, expiryDate, isDonation);
   }
 }
