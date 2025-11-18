@@ -26,4 +26,10 @@ public interface FoodItemRepository extends JpaRepository<FoodItem, Long> {
             @Param("expiryDate") LocalDate expiryDate,
             @Param("isDonation") Boolean isDonation
     );
+
+    List<FoodItem> findAllByUserIdAndConvertToDonationFalseAndExpiryDateBetweenOrderByExpiryDateAsc(
+            Long userId,
+            LocalDate today,
+            LocalDate limitDate
+    );
 }

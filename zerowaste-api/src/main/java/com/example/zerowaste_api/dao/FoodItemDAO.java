@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -42,5 +43,9 @@ public class FoodItemDAO {
 
   public Optional<FoodItem> findDuplicateItem(Long userId, String name, LocalDate expiryDate, Boolean isDonation) {
     return foodItemRepository.findDuplicateItem(userId, name, expiryDate, isDonation);
+  }
+
+  public List<FoodItem> findAllByUserIdAndConvertToDonationFalseAndExpiryDateBetweenOrderByExpiryDateAsc(Long userId, LocalDate today, LocalDate limit) {
+    return foodItemRepository.findAllByUserIdAndConvertToDonationFalseAndExpiryDateBetweenOrderByExpiryDateAsc(userId, today, limit);
   }
 }
