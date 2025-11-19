@@ -155,20 +155,16 @@ public class FoodInventoryService {
 
     private FoodItemResDTO handleConvertToDonation(FoodItem existingItem, FoodItemReqDTO reqDTO) {
 
-        // STEP 1: Determine the "New Total Quantity"
-        // If user sent a new quantity in DTO, use it. Otherwise, use what's in DB.
-        Long newTotalQuantity = (reqDTO.getQuantity() != null)
-                ? reqDTO.getQuantity()
-                : existingItem.getQuantity();
+        // STEP 1: Determine the "New Total Quantity" (Logic remains the same)
+        Long newTotalQuantity = reqDTO.getQuantity();
 
-        Long reservedQty = reqDTO.getReservedQuantity();
+        // Use effective values from DTO or DB (Logic remains the same)
+        Long effectiveReservedQty = reqDTO.getReservedQuantity();
 
-        if (newTotalQuantity < reservedQty) {
+        if (newTotalQuantity < effectiveReservedQty) {
             throw new ServiceAppException(HttpStatus.BAD_REQUEST, "Cannot reduce quantity below the amount currently reserved in meal plans.");
         }
-
-        // Check if fully reserved (and no room to donate)
-        if (Objects.equals(reservedQty, newTotalQuantity)) {
+        if (Objects.equals(effectiveReservedQty, newTotalQuantity)) {
             throw new ServiceAppException(HttpStatus.BAD_REQUEST, "Cannot donate item. It is fully reserved in Meal Plans.");
         }
 
@@ -179,29 +175,34 @@ public class FoodInventoryService {
         }
 
         // STEP 3: The Core Check
-        // Reserved (DB) + Donation (DTO) <= New Total (DTO or DB)
-        if ((reservedQty + donationQty) <= newTotalQuantity) {
+        if ((effectiveReservedQty + donationQty) <= newTotalQuantity) {
 
-            // --- SPLIT RECORD LOGIC ---
+            // --- NEW LOGIC START ---
+            Long remainingQuantity = newTotalQuantity - donationQty;
 
-            // Record 1 (Existing Personal):
-            // Update this to be the (New Total - Donation Amount).
-            existingItem = foodItemConverter.toFoodItem(reqDTO, existingItem);
-            existingItem.setQuantity(newTotalQuantity - donationQty);
-            existingItem.setConvertToDonation(false);
+            // Record 1 (Existing Personal): Handle update or delete
+            if (remainingQuantity > 0) {
+                // Case 1: Partial donation. Update the existing record.
+                existingItem = foodItemConverter.toFoodItem(reqDTO, existingItem);
+                existingItem.setQuantity(remainingQuantity);
+                existingItem.setConvertToDonation(false);
+                foodItemDAO.save(existingItem);
+            } else {
+                // Case 2: Full donation (remainingQuantity is 0). Delete the record.
+                foodItemDAO.delete(existingItem.getId());
+            }
+            // --- NEW LOGIC END ---
 
-            foodItemDAO.save(existingItem);
-
-            // Record 2 (New Donation):
+            // Record 2 (New Donation): Logic remains the same
             FoodItem donationItem = new FoodItem();
 
-            // Copy details from the UPDATED existing item (so names/expiry match)
+            // Copy details from the UPDATED existing item
+            // Note: If deleted above, existingItem still holds the object reference for copying.
             foodItemConverter.copyFoodItem(donationItem, existingItem);
 
             donationItem.setQuantity(donationQty);
             donationItem.setConvertToDonation(true);
             donationItem.setReservedQuantity(0L);
-            donationItem.setId(null); // Ensure new ID
 
             foodItemDAO.save(donationItem);
 

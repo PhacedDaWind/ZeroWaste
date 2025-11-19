@@ -28,7 +28,7 @@ public class ExpiryCheckScheduler {
         this.notificationService = notificationService;
     }
 
-    //    @Scheduled(cron = "0 * * * * *") // testing purposes
+//        @Scheduled(cron = "0 * * * * *") // testing purposes
     // 9am everyday
     @Scheduled(cron = "0 0 9 * * *")
     @Transactional
